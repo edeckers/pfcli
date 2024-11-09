@@ -1,0 +1,23 @@
+[tool.black]
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.BASIC]
+good-names = "log"
+
+[tool.pylint.MASTER]
+disable = [
+    "C0114", # missing-module-docstring
+    "C0115", # missing-class-docstring
+    "C0116", # missing-function-docstring
+    "R0801", # duplicate-code
+    "W0511", # fixme
+]
+
+[tool.pylint.pre-commit-hook]
+limit = 10
+
+[tool.mypy]
+strict = true
