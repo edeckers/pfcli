@@ -23,5 +23,5 @@ def domain(
     return re.match(r"^[a-zA-Z0-9-.]+$", value) is not None
 
 
-def description(value: str) -> bool:
-    return html.escape(value) == value
+def positive(value: int) -> bool:
+    return value >= 0

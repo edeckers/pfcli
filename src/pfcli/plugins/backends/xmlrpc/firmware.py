@@ -1,7 +1,7 @@
 from typing import Any
 import xmlrpc.client as xc
 
-from pfcli.consts import DEFAULT_TIMEOUT_IN_MILLISECONDS
+from pfcli.consts import DEFAULT_TIMEOUT_IN_SECONDS
 import pfcli.domain.firmware.entities as entities
 import pfcli.domain.firmware.api as api
 from pfcli.shared.helpers import v
@@ -12,7 +12,7 @@ class FirmwareApi(api.FirmwareApi):
     def __init__(
         self,
         proxy: xc.ServerProxy,
-        timeout_in_milliseconds: int = DEFAULT_TIMEOUT_IN_MILLISECONDS,
+        timeout_in_milliseconds: int = DEFAULT_TIMEOUT_IN_SECONDS,
     ):
         self.__proxy = proxy
         self.__timeout_in_seconds = timeout_in_milliseconds / 1_000

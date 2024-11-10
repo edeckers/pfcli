@@ -9,8 +9,8 @@ from pfcli.domain.unbound.entities import HostOverride
 import pfcli.shared.validators as validate
 import pfcli.shared.sanitizers as sanitize
 
-ERROR_OK = 0
-ERROR_SANITIZE_FAILED = 100
+EXIT_OK = 0
+EXIT_SANITIZE_FAILED = 100
 
 
 # pylint: disable=too-few-public-methods
@@ -38,13 +38,64 @@ class UboundHandler:
         )
 
     def host_overrides(self, sort_by_hostname: bool = False) -> list[HostOverride]:
-        unsorted_host_overrides = self.__backend.unbound.host_overrides()
+        unsorted_host_overrides = self.__backend.unbound.host_overrides.list()
 
         return (
             UboundHandler.__sort_by_hostname(unsorted_host_overrides)
             if sort_by_hostname
             else unsorted_host_overrides
         )
+
+    # pylint: disable=too-many-arguments
+    def host_override_add(
+        self,
+        domain: str,
+        host: str,
+        ip: str,
+        description: str | None = None,
+        reason: str | None = None,
+    ) -> tuple[None, int]:
+        if not validate.ip(ip):
+            print(f"Invalid IP address '{ip}'")
+            return None, EXIT_SANITIZE_FAILED
+
+        if not validate.domain(domain):
+            print(f"Invalid domain name '{domain}'")
+            return None, EXIT_SANITIZE_FAILED
+
+        if not validate.host(host):
+            print(f"Invalid host name '{host}'")
+            return None, EXIT_SANITIZE_FAILED
+
+        self.__backend.unbound.host_overrides.add(
+            HostOverride(
+                domain=domain,
+                host=host,
+                ip=ip,
+                description=sanitize.escape(description or ""),
+                aliases=[],
+            ),
+            sanitize.escape(reason or ""),
+        )
+
+        return None, EXIT_OK
+
+    # pylint: disable=too-many-arguments
+    def host_override_delete(
+        self,
+        index: int,
+        reason: str | None = None,
+    ) -> tuple[None, int]:
+        if not validate.positive(index):
+            print(f"Invalid index '{index}'")
+            return None, EXIT_SANITIZE_FAILED
+
+        self.__backend.unbound.host_overrides.delete(
+            index,
+            sanitize.escape(reason or ""),
+        )
+
+        return None, EXIT_OK
 
 
 def create_cli(backend: Backend, printers: dict[str, AggregatePrinter]) -> click.Group:
@@ -109,30 +160,29 @@ def create_cli(backend: Backend, printers: dict[str, AggregatePrinter]) -> click
         description: str | None = None,
         reason: str | None = None,
     ) -> None:
-        if not validate.ip(ip):
-            print(f"Invalid IP address '{ip}'")
-            sys.exit(ERROR_SANITIZE_FAILED)
-
-        if not validate.domain(domain):
-            print(f"Invalid domain name '{domain}'")
-            sys.exit(ERROR_SANITIZE_FAILED)
-
-        if not validate.host(host):
-            print(f"Invalid host name '{host}'")
-            sys.exit(ERROR_SANITIZE_FAILED)
-
-        backend.unbound.host_override_add(
-            HostOverride(
-                domain=domain,
-                host=host,
-                ip=ip,
-                description=sanitize.escape(description or ""),
-                aliases=[],
-            ),
-            reason,
+        _, code = __ubound_handler.host_override_add(
+            domain, host, ip, description, reason
         )
 
-        sys.exit(ERROR_OK)
+        sys.exit(code)
+
+    @unbound.command("delete-host-override")
+    @click.option(
+        "--index",
+        help="Index of the host in the *unsorted* host list",
+        type=int,
+        required=True,
+    )
+    @click.option(
+        "--reason", help="Description for the configuration log", required=False
+    )
+    def unbound_host_override_delete(
+        index: int,
+        reason: str | None = None,
+    ) -> None:
+        _, code = __ubound_handler.host_override_delete(index, reason)
+
+        sys.exit(code)
 
     @click.command("info")
     @click.option(
