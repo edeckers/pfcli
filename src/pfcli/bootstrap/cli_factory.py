@@ -1,9 +1,16 @@
+import sys
 import click
 
 from pfcli.bootstrap.backend_factory import Backend
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import AggregatePrinter
 from pfcli.domain.unbound.entities import HostOverride
+
+import pfcli.shared.validators as validate
+import pfcli.shared.sanitizers as sanitize
+
+ERROR_OK = 0
+ERROR_SANITIZE_FAILED = 100
 
 
 # pylint: disable=too-few-public-methods
@@ -86,6 +93,46 @@ def create_cli(backend: Backend, printers: dict[str, AggregatePrinter]) -> click
         maybe_printer = printers.get(output)
         if maybe_printer:
             print(maybe_printer.print_list(host_overrides, HostOverride))
+
+    @unbound.command("add-host-override")
+    @click.option("--domain", help="Domain name", required=True)
+    @click.option("--host", help="Host name", required=True)
+    @click.option("--ip", help="Target IP address", required=True)
+    @click.option("--description", help="Description for the entry", required=False)
+    @click.option(
+        "--reason", help="Description for the configuration log", required=False
+    )
+    def unbound_host_override_add(
+        domain: str,
+        host: str,
+        ip: str,
+        description: str | None = None,
+        reason: str | None = None,
+    ) -> None:
+        if not validate.ip(ip):
+            print(f"Invalid IP address '{ip}'")
+            sys.exit(ERROR_SANITIZE_FAILED)
+
+        if not validate.domain(domain):
+            print(f"Invalid domain name '{domain}'")
+            sys.exit(ERROR_SANITIZE_FAILED)
+
+        if not validate.host(host):
+            print(f"Invalid host name '{host}'")
+            sys.exit(ERROR_SANITIZE_FAILED)
+
+        backend.unbound.host_override_add(
+            HostOverride(
+                domain=domain,
+                host=host,
+                ip=ip,
+                description=sanitize.escape(description or ""),
+                aliases=[],
+            ),
+            reason,
+        )
+
+        sys.exit(ERROR_OK)
 
     @click.command("info")
     @click.option(

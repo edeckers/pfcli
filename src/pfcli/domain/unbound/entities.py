@@ -8,7 +8,7 @@ class HostOverride:
     class Alias:
         host: str
         domain: str
-        description: str
+        description: str | None = None
 
         def __str__(self) -> str:
             fields = f"{self.host}.{self.domain}"
@@ -21,5 +21,5 @@ class HostOverride:
     domain: str
     host: str
     ip: str
-    description: str
     aliases: list[HostOverride.Alias]
+    description: str | None = None
