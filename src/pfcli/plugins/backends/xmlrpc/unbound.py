@@ -3,9 +3,8 @@ from typing import Any
 import xmlrpc.client as xc
 
 from pfcli.consts import DEFAULT_TIMEOUT_IN_MILLISECONDS
-import pfcli.domain.unbound.entities as entities
-import pfcli.domain.unbound.unbound as api
-from pfcli.plugins.backends.xmlrpc.helpers import v
+from pfcli.domain.unbound import entities
+import pfcli.domain.unbound.api as api
 
 
 def __parse_host_override_alias(alias: dict[str, str]) -> entities.HostOverride.Alias:
@@ -33,7 +32,7 @@ def _parse_host_override(host: dict[str, Any]) -> entities.HostOverride:
         domain=host["domain"],
         ip=host["ip"],
         description=host["descr"],
-        aliases=__parse_host_override_aliases(host["aliases"]),  # type: ignore
+        aliases=__parse_host_override_aliases(host["aliases"]),
     )
 
 

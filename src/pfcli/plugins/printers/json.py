@@ -1,9 +1,9 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 import json
-from pfcli.domain.firmware.firmware import Firmware
+from pfcli.domain.firmware.entities import Firmware
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer
-from pfcli.domain.unbound.unbound import HostOverride
+from pfcli.domain.unbound.entities import HostOverride
 
 
 # pylint: disable=too-few-public-methods

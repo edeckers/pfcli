@@ -1,7 +1,7 @@
 import xmlrpc.client as xc
 from dataclasses import dataclass
 
-from pfcli.domain.firmware.firmware import FirmwareApi
+from pfcli.domain.firmware.api import FirmwareApi
 from pfcli.consts import SUPPORTED_BACKENDS
 from pfcli.plugins.backends.xmlrpc.unbound import UnboundApi
 import pfcli.plugins.backends.xmlrpc.unbound as xu

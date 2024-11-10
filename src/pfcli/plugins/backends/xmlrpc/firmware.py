@@ -3,8 +3,8 @@ import xmlrpc.client as xc
 
 from pfcli.consts import DEFAULT_TIMEOUT_IN_MILLISECONDS
 import pfcli.domain.firmware.entities as entities
-import pfcli.domain.firmware.firmware as api
-from pfcli.plugins.backends.xmlrpc.helpers import v
+import pfcli.domain.firmware.api as api
+from pfcli.shared.helpers import v
 
 
 # pylint: disable=too-few-public-methods

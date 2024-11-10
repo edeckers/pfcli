@@ -1,22 +1,14 @@
-from typing import Any
-from pfcli.domain.firmware.entities import Versioned
-from pfcli.domain.firmware.firmware import Firmware
+from pfcli.domain.firmware.entities import Firmware, Versioned
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer
-from pfcli.domain.unbound.unbound import HostOverride
-from pfcli.plugins.backends.xmlrpc.helpers import indent
+from pfcli.domain.unbound.entities import HostOverride
+from pfcli.shared.helpers import indent
 
 
 # pylint: disable=too-few-public-methods
 class VersionedPrinter(Printer[Versioned]):
     def print(self, printable: Versioned) -> str:
         return f"version: {printable.version}"
-
-
-# pylint: disable=too-few-public-methods
-class FirmwareConfigPrinter(Printer[Firmware.Config]):
-    def print(self, printable: Firmware.Config) -> str:
-        return VersionedPrinter().print(printable)
 
 
 FirmwareConfigPrinter = VersionedPrinter
