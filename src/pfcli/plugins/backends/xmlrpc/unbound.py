@@ -21,9 +21,7 @@ def __parse_host_override_aliases(
     if "item" not in aliases:
         return []
 
-    return sorted(
-        list(map(__parse_host_override_alias, aliases["item"])), key=lambda a: a.host
-    )
+    return list(map(__parse_host_override_alias, aliases["item"]))
 
 
 def _parse_host_override(host: dict[str, Any]) -> entities.HostOverride:
@@ -54,4 +52,4 @@ class UnboundApi(api.UnboundApi):
 
         hosts = json.loads(hosts_r)
 
-        return sorted(list(map(_parse_host_override, hosts)), key=lambda h: h.host)
+        return list(map(_parse_host_override, hosts))

@@ -14,7 +14,8 @@ __printers = {
             HostOverride: json.HostOverridePrinter(),
             HostOverride.Alias: json.HostOverrideAliasPrinter(),
             Info: json.InfoPrinter(),
-        }
+        },
+        json.JsonListPrinter.print,
     ),
     "text": AggregatePrinter(
         {
@@ -22,7 +23,8 @@ __printers = {
             HostOverride: text.HostOverridePrinter(),
             HostOverride.Alias: text.HostOverrideAliasPrinter(),
             Info: text.InfoPrinter(),
-        }
+        },
+        text.TextListPrinter("\n\n").print,
     ),
 }
 

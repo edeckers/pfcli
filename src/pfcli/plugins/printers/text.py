@@ -1,8 +1,18 @@
+from typing import Any
 from pfcli.domain.firmware.entities import Firmware, Versioned
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer
 from pfcli.domain.unbound.entities import HostOverride
 from pfcli.shared.helpers import indent
+
+
+# pylint: disable=too-few-public-methods
+class TextListPrinter:
+    def __init__(self, joint: str | None = None) -> None:
+        self.__joint = joint or "\n"
+
+    def print(self, printer: Printer[Any], printable: list[Any]) -> str:
+        return self.__joint.join(map(printer.print, printable))
 
 
 # pylint: disable=too-few-public-methods
@@ -66,6 +76,8 @@ class InfoPrinter(Printer[Info]):
         firmware_printer = FirmwarePrinter()
         host_override_printer = HostOverridePrinter()
 
+        list_printer = TextListPrinter()
+
         return "\n".join(
             [
                 "FIRMWARE",
@@ -74,6 +86,9 @@ class InfoPrinter(Printer[Info]):
                 "",
                 "HOST OVERRIDES",
                 "",
-                "\n\n".join(map(host_override_printer.print, printable.host_overrides)),
+                list_printer.print(
+                    host_override_printer,
+                    printable.host_overrides,
+                ),
             ]
         )

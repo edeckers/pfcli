@@ -1,9 +1,19 @@
 from dataclasses import asdict
 import json
+from typing import Any
 from pfcli.domain.firmware.entities import Firmware
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer
 from pfcli.domain.unbound.entities import HostOverride
+
+
+# pylint: disable=too-few-public-methods
+class JsonListPrinter:
+    @staticmethod
+    def print(printer: Printer[Any], printable: list[Any]) -> str:
+        items = ",".join(map(printer.print, printable))
+
+        return f"[{items}]"
 
 
 # pylint: disable=too-few-public-methods
