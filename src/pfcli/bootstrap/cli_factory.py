@@ -1,13 +1,13 @@
 import sys
+
 import click
 
+import pfcli.shared.sanitizers as sanitize
+import pfcli.shared.validators as validate
 from pfcli.bootstrap.backend_factory import Backend
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import AggregatePrinter
 from pfcli.domain.unbound.entities import HostOverride
-
-import pfcli.shared.validators as validate
-import pfcli.shared.sanitizers as sanitize
 
 EXIT_OK = 0
 EXIT_SANITIZE_FAILED = 100
@@ -47,6 +47,7 @@ class UboundHandler:
         )
 
     # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-positional-arguments
     def host_override_add(
         self,
         domain: str,

@@ -1,10 +1,8 @@
 from pfcli.consts import SUPPORTED_OUTPUT_FORMATS
-
 from pfcli.domain.firmware.entities import Firmware
 from pfcli.domain.info import Info
-from pfcli.domain.unbound.entities import HostOverride
 from pfcli.domain.printers.printers import AggregatePrinter
-
+from pfcli.domain.unbound.entities import HostOverride
 from pfcli.plugins.printers import json, text
 
 __printers = {

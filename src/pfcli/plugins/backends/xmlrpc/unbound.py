@@ -1,11 +1,15 @@
 import json
+import xmlrpc.client as xc  # nosec # B411 - patch applied below, but bandit does not detect it
 from typing import Any
-import xmlrpc.client as xc
+
+import defusedxml.xmlrpc as dxmlrpc
 
 from pfcli.consts import DEFAULT_TIMEOUT_IN_SECONDS
-from pfcli.domain.unbound import entities
-import pfcli.domain.unbound.api as api
+from pfcli.domain.unbound import api, entities
+from pfcli.plugins.backends.xmlrpc.command_runner import CommandRunner
 from pfcli.shared.helpers import indent
+
+dxmlrpc.monkey_patch()  # Fix for [B411:blacklist] xmlrpc.client XML vulnerability
 
 
 def __parse_host_override_alias(alias: dict[str, str]) -> entities.HostOverride.Alias:
@@ -43,29 +47,17 @@ def _dict_to_php_array(d: dict[str, str]) -> str:
     return f"array(\n{indent(lines)}\n)"
 
 
-# pylint: disable=too-few-public-methods
-class CommandRunner:
-    def __init__(self, proxy: xc.ServerProxy, timeout_in_seconds: float):
-        self.__timeout_in_seconds = timeout_in_seconds
-        self.__proxy = proxy
-
-    def exec(self, commands: list[str]) -> str:
-        return self.__proxy.pfsense.exec_php(
-            "\n".join(commands), self.__timeout_in_seconds
-        )  # type: ignore
-
-    def apply_changes(self) -> None:
-
-        self.exec(  # services_unbound.php
-            [
-                "$retval = 0;",
-                "$retval |= services_unbound_configure();",
-                "if ($retval == 0) { clear_subsystem_dirty('unbound'); }",
-                "system_resolvconf_generate();",
-                "system_dhcpleases_configure();",
-                "$toreturn = 1;",
-            ]
-        )
+def _apply_changes(cr: CommandRunner) -> None:
+    cr.exec(  # services_unbound.php
+        [
+            "$retval = 0;",
+            "$retval |= services_unbound_configure();",
+            "if ($retval == 0) { clear_subsystem_dirty('unbound'); }",
+            "system_resolvconf_generate();",
+            "system_dhcpleases_configure();",
+            "$toreturn = 1;",
+        ]
+    )
 
 
 class HostOverridesApi(api.UnboundApi.HostOverridesApi):
@@ -108,10 +100,9 @@ class HostOverridesApi(api.UnboundApi.HostOverridesApi):
             ]
         )
 
-        self.__cr.apply_changes()
+        _apply_changes(self.__cr)
 
     def delete(self, index: int, message_reason: str | None = None) -> None:
-
         message_reason = message_reason or "Host override deleted from DNS Resolver."
 
         path_to_hosts = f"unbound/hosts/{index}"
@@ -126,7 +117,7 @@ class HostOverridesApi(api.UnboundApi.HostOverridesApi):
             ]
         )
 
-        self.__cr.apply_changes()
+        _apply_changes(self.__cr)
 
 
 # pylint: disable=too-few-public-methods

@@ -2,7 +2,6 @@ from typing import Any, TypeVar
 
 from pfcli.consts import DEFAULT_INDENT
 
-
 ValueT = TypeVar("ValueT", str, float, int)
 
 

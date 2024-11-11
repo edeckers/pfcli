@@ -2,7 +2,6 @@ from pfcli.bootstrap.backend_factory import create_backend
 from pfcli.bootstrap.cli_factory import create_cli
 from pfcli.bootstrap.printer_factory import create_printer
 
-
 backend = create_backend("xmlrpc")
 
 printer_json = create_printer("json")

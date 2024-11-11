@@ -1,10 +1,13 @@
+import xmlrpc.client as xc  # nosec # B411 - patch applied below, but bandit does not detect it
 from typing import Any
-import xmlrpc.client as xc
+
+import defusedxml.xmlrpc as dxmlrpc
 
 from pfcli.consts import DEFAULT_TIMEOUT_IN_SECONDS
-import pfcli.domain.firmware.entities as entities
-import pfcli.domain.firmware.api as api
+from pfcli.domain.firmware import api, entities
 from pfcli.shared.helpers import v
+
+dxmlrpc.monkey_patch()  # Fix for [B411:blacklist] xmlrpc.client XML vulnerability
 
 
 # pylint: disable=too-few-public-methods
@@ -12,10 +15,10 @@ class FirmwareApi(api.FirmwareApi):
     def __init__(
         self,
         proxy: xc.ServerProxy,
-        timeout_in_milliseconds: int = DEFAULT_TIMEOUT_IN_SECONDS,
+        timeout_in_seconds: int = DEFAULT_TIMEOUT_IN_SECONDS,
     ):
         self.__proxy = proxy
-        self.__timeout_in_seconds = timeout_in_milliseconds / 1_000
+        self.__timeout_in_seconds = timeout_in_seconds
 
     def version(
         self,

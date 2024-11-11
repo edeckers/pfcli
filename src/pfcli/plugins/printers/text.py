@@ -1,4 +1,5 @@
 from typing import Any
+
 from pfcli.domain.firmware.entities import Firmware, Versioned
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer

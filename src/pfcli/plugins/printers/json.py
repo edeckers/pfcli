@@ -1,6 +1,7 @@
-from dataclasses import asdict
 import json
+from dataclasses import asdict
 from typing import Any
+
 from pfcli.domain.firmware.entities import Firmware
 from pfcli.domain.info import Info
 from pfcli.domain.printers.printers import Printer

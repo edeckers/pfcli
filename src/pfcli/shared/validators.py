@@ -1,6 +1,6 @@
+import html
 import re
 import socket
-import html
 
 
 def ip(value: str) -> bool:
