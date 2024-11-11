@@ -19,6 +19,34 @@ Allows you to access PfSense machines through CLI, which _should_ make headless 
 pipx install pfcli
 ```
 
+## Configuration
+
+The following environment variables are available to configure the application:
+
+|Name|Default|Description
+|----|-------|-----------
+`PFCLI_PFSENSE_SCHEME`|https|What scheme does the pfSense web interface listen on?
+`PFCLI_PFSENSE_HOSTNAME`|192.168.0.1|To what hostname or IP address does the pfSense web interface respond?
+`PFCLI_PFSENSE_USERNAME`|admin|What is the username for your pfSense web interface?
+`PFCLI_PFSENSE_PASSWORD`|pfsense|What is the password for your pfSense web interface?
+
+Want to use config from a file instead?
+
+**Step 1** Create a file `.env`, with contents as described below - adjust for your situation
+
+```text
+PFCLI_PFSENSE_SCHEME=https
+PFCLI_PFSENSE_HOSTNAME=192.168.0.1
+PFCLI_PFSENSE_USERNAME=admin
+PFCLI_PFSENSE_PASSWORD=pfsense
+```
+
+**Step 2** Load the variables from `.env`
+
+```bash
+export $(xargs < .env)
+```
+
 ## Examples
 
 **List all domain overrides**
