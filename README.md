@@ -23,12 +23,12 @@ pipx install pfcli
 
 The following environment variables are available to configure the application:
 
-|Name|Default|Description
-|----|-------|-----------
-`PFCLI_PFSENSE_SCHEME`|https|What scheme does the pfSense web interface listen on?
-`PFCLI_PFSENSE_HOSTNAME`|192.168.0.1|To what hostname or IP address does the pfSense web interface respond?
-`PFCLI_PFSENSE_USERNAME`|admin|What is the username for your pfSense web interface?
-`PFCLI_PFSENSE_PASSWORD`|pfsense|What is the password for your pfSense web interface?
+| Name                     | Default     | Description                                                            |
+| ------------------------ | ----------- | ---------------------------------------------------------------------- |
+| `PFCLI_PFSENSE_SCHEME`   | https       | What scheme does the pfSense web interface listen on?                  |
+| `PFCLI_PFSENSE_HOSTNAME` | 192.168.0.1 | To what hostname or IP address does the pfSense web interface respond? |
+| `PFCLI_PFSENSE_USERNAME` | admin       | What is the username for your pfSense web interface?                   |
+| `PFCLI_PFSENSE_PASSWORD` | pfsense     | What is the password for your pfSense web interface?                   |
 
 Want to use config from a file instead?
 
