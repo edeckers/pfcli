@@ -1,7 +1,7 @@
 # PfCLI
 
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-[![Build](https://github.com/edeckers/pfcli/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/edeckers/pfcli/actions/workflows/release.yml)
+[![Build](https://github.com/edeckers/pfcli/actions/workflows/release.yml/badge.svg?branch=develop)](https://github.com/edeckers/pfcli/actions/workflows/release.yml)
 [![PyPI](https://img.shields.io/pypi/v/pfcli.svg?maxAge=3600)](https://pypi.org/project/pfcli)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 

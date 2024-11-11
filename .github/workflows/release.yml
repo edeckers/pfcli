@@ -1,4 +1,4 @@
-name: Release to GitHub and PyPI
+name: Release to PyPI
 on:
   workflow_dispatch:
 

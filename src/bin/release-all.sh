@@ -37,15 +37,12 @@ function publish_semantic_release () {
   p run semantic-release publish
   echo "Ran semantic-release publish"
 
-  echo "Releasing to PyPI through Twine"
-  p run twine upload -r pypi dist/* --username __token__ --password ${PYPI_TOKEN}
-  echo "Released to PyPI through Twine"
+  echo "Releasing to PyPI"
+  POETRY_PYPI_TOKEN_PYPI=${PYPI_TOKEN}
+  p publish --build
+  echo "Released to PyPI"
 
   echo "Published release"
-}
-
-function build_dist () {
-  p build
 }
 
 cd_to_root_directory
