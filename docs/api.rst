@@ -8,7 +8,7 @@ Firmware
 
 Optional arguments:
 
-`--format`: output format either `json` or `text`, defaults to `text`
+``--format``: output format either `json` or `text`, defaults to `text`
 
 .. code-block:: bash
 
@@ -21,7 +21,7 @@ Info
 
 Optional arguments:
 
-`--format`: output format either `json` or `text`, defaults to `text`
+``--format``: output format either `json` or `text`, defaults to `text`
 
 .. code-block:: bash
 
@@ -37,8 +37,9 @@ Host overrides
 
 Optional arguments:
 
-`--format`: output format either `json` or `text`, defaults to `text`
-`--sorted`: sort the output by domain, defaults to `false`
+``--format``: output format either `json` or `text`, defaults to `text`
+
+``--sorted``: sort the output by domain, defaults to `false`
 
 .. code-block:: bash
 
@@ -48,8 +49,9 @@ Optional arguments:
 
 Optional arguments:
 
-`--description`: description of the host override
-`--reason`: reason for the host override, stored in update logs
+``--description``: description of the host override
+
+``--reason``: reason for the host override, stored in update logs
 
 .. code-block:: bash
 
@@ -61,7 +63,7 @@ Optional arguments:
 
 Optional arguments:
 
-`--reason`: reason for deleting host override, stored in update logs
+``--reason``: reason for deleting host override, stored in update logs
 
 .. code-block:: bash
 
