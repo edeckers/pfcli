@@ -5,13 +5,14 @@
 [![PyPI](https://img.shields.io/pypi/v/pfcli.svg?maxAge=3600)](https://pypi.org/project/pfcli)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
-:warning: **This is a work in progress, only a few features are implemented, and none of them are under automated testing**
+:warning: **No guarantees of any kind: this is a work in progress, only a few features are implemented, and none of them are under automated testing. The application depends on private pfSense API functionality, so the application might break, or mess up your pfSense appliance's config**
 
 Allows you to access PfSense machines through CLI, which _should_ make headless management easier. The application uses the XML-RPC interface provided natively by PfSense.
 
 ## Requirements
 
 - Python >= 3.12 - older versions might work, but are not supported
+- Netgate pfSense Plus, 23.09-RELEASE :warning: this is the only version that I tested
 
 ## Installation
 
