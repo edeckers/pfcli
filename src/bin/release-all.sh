@@ -38,8 +38,7 @@ function publish_semantic_release () {
   echo "Ran semantic-release publish"
 
   echo "Releasing to PyPI"
-  POETRY_PYPI_TOKEN_PYPI=${PYPI_TOKEN}
-  p publish --build
+  POETRY_PYPI_TOKEN_PYPI=${PYPI_TOKEN} p publish
   echo "Released to PyPI"
 
   echo "Published release"
