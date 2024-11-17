@@ -2,7 +2,30 @@
 
 
 
+## v0.1.2 (2024-11-17)
+
+### Documentation
+
+* docs: bump Python to 3.12 for readthedocs ([`71f11e9`](https://github.com/edeckers/pfcli/commit/71f11e918786de29f1b6594120264a782cc3793c))
+
+* docs: reformat README.md ([`dcd2cd8`](https://github.com/edeckers/pfcli/commit/dcd2cd8b5b3433368eb9229f3e051fea382fa16c))
+
+* docs: add configuration instructions to README.md ([`cb8793a`](https://github.com/edeckers/pfcli/commit/cb8793a2d491a7728858694f55d286a1a2cbb79f))
+
+### Fix
+
+* fix: extend support for Python to 3.11 ([`2f221ae`](https://github.com/edeckers/pfcli/commit/2f221aeb881255756b4761b57ee06693293759e2))
+
+### Unknown
+
+* expand on requirements and warnings ([`16f0754`](https://github.com/edeckers/pfcli/commit/16f0754c155ff9ebddb9f49abf9040234885490e))
+
+
 ## v0.1.1 (2024-11-11)
+
+### Chore
+
+* chore(release): release 0.1.1 ([`3b95a72`](https://github.com/edeckers/pfcli/commit/3b95a723c3cc3f5e41d1347922ae6b4c56d01203))
 
 ### Fix
 
