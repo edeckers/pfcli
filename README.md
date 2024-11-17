@@ -11,7 +11,7 @@ Allows you to access PfSense machines through CLI, which _should_ make headless 
 
 ## Requirements
 
-- Python >= 3.12 - older versions might work, but are not supported
+- Python >= 3.11 - older versions might work, but are not supported
 - Netgate pfSense Plus, 23.09-RELEASE :warning: this is the only version that I tested
 
 ## Installation
