@@ -2,7 +2,28 @@
 
 
 
+## v0.2.0 (2024-12-04)
+
+### Documentation
+
+* docs: update available commands for CLI ([`36c4190`](https://github.com/edeckers/pfcli/commit/36c41902dfe6fd9344eed82463c1d02b7baf1e5c))
+
+### Feature
+
+* feat: add host override alias management ([`593ad86`](https://github.com/edeckers/pfcli/commit/593ad86baf9b5c3897b8ede1e56e4d818d9b0d39))
+
+### Fix
+
+* fix(deps): bump black to ^24.10 ([`0a8f6e4`](https://github.com/edeckers/pfcli/commit/0a8f6e494ea41d6c645e8ab9530a64a425d683bb))
+
+* fix(deps): bump all poetry dependencies ([`46afb4f`](https://github.com/edeckers/pfcli/commit/46afb4f7db3d54b0dce4799d52363261dbaacee7))
+
+
 ## v0.1.2 (2024-11-17)
+
+### Chore
+
+* chore(release): release 0.1.2 ([`399a417`](https://github.com/edeckers/pfcli/commit/399a41758705fc87a8691aff37728afc0c66535c))
 
 ### Documentation
 
