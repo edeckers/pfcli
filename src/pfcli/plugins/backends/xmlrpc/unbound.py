@@ -1,3 +1,4 @@
+from dataclasses import asdict
 import json
 import xmlrpc.client as xc  # nosec # B411 - patch applied below, but bandit does not detect it
 from typing import Any
@@ -39,10 +40,26 @@ def _parse_host_override(host: dict[str, Any]) -> entities.HostOverride:
     )
 
 
-def _dict_to_php_array(d: dict[str, str]) -> str:
-    xs = [f'"{k}" => "{v}"' for k, v in d.items()]
+def _dict_to_php_array(d: dict[str, Any]) -> str:
+    def __o(v: Any) -> str:
+        if isinstance(v, dict):
+            return _dict_to_php_array(v)
+        if isinstance(v, list):
+            return _list_to_php_array(v)
+        if isinstance(v, str):
+            return f'"{v}"'
+
+        return str(v)
+
+    xs = [f'"{k}" => {__o(v)}' for k, v in d.items()]
 
     lines = ",\n".join(xs)
+
+    return f"array(\n{indent(lines)}\n)"
+
+
+def _list_to_php_array(dx: list[Any]) -> str:  # Any should be DataclassInstance
+    lines = ",\n".join(map(lambda x: _dict_to_php_array(asdict(x)), dx))
 
     return f"array(\n{indent(lines)}\n)"
 
@@ -77,11 +94,13 @@ class HostOverridesApi(api.UnboundApi.HostOverridesApi):
         self, override: entities.HostOverride, message_reason: str | None = None
     ) -> None:
         override_params = {
+            "aliases": {
+                "item": override.aliases,
+            },
             "descr": override.description or "",
             "domain": override.domain,
             "host": override.host,
             "ip": override.ip,
-            "aliases": _dict_to_php_array({}),
         }
         message_reason = (
             message_reason
@@ -118,6 +137,12 @@ class HostOverridesApi(api.UnboundApi.HostOverridesApi):
         )
 
         _apply_changes(self.__cr)
+
+    def update(
+        self, index: int, override: api.HostOverride, message_reason: str | None = None
+    ) -> None:
+        self.delete(index, message_reason)
+        self.add(override, message_reason)
 
 
 # pylint: disable=too-few-public-methods
